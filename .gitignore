@@ -8,3 +8,6 @@ output/
 venv/
 node_modules/
 .DS_Store
+*.wav
+*.mp3
+*.flac
