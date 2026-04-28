@@ -100,7 +100,7 @@ async def separate(file: UploadFile = File(...)):
         for f in os.listdir(stem_folder):
             if f.endswith(".wav"):
                 stem_name = f.replace(".wav", "")
-                stems[stem_name] = f"http://127.0.0.1:5000/output/htdemucs/{base_name}/{f}"
+                stems[stem_name] = f"https://spectrum-split-backend.onrender.com/output/htdemucs/{base_name}/{f}"
 
         # cleanup
         threading.Thread(
@@ -133,7 +133,7 @@ async def split_instruments(payload: SplitRequest):
             raise HTTPException(status_code=400, detail="Missing audio")
 
         # Convert URL → local file path
-        path = audio_url.replace("http://127.0.0.1:5000/", "")
+        path = audio_url.replace("https://spectrum-split-backend.onrender.com/", "")
         file_path = os.path.join(os.getcwd(), path)
 
         if not os.path.exists(file_path):
@@ -164,7 +164,7 @@ async def split_instruments(payload: SplitRequest):
 
             sf.write(path, list(zip(*stereo)), sr)
 
-            instruments[name] = f"http://127.0.0.1:5000/output/instruments/{job_id}/{name}.wav"
+            instruments[name] = f"https://spectrum-split-backend.onrender.com/output/instruments/{job_id}/{name}.wav"
 
         return {
             "instruments": instruments
